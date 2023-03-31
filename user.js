@@ -8,20 +8,24 @@ class User {
 
     // methods
     makeDeposit(amount) {
-        this.accountBalance += amount;
+        this.accountBalance += amount
+        return this;
     }
 
     makeWithdrawal(amount) {
-        this.accountBalance -= amount;
+        this.accountBalance -= amount
+        return this;
     }
     
     displayBalance() {
         console.log(`User: ${this.name}, Balance: $${this.accountBalance}`)
+        return this;
     }
 
     transferMoney(otherUser, amount) {
         this.accountBalance -= amount;
         otherUser.accountBalance += amount;
+        return this;
     }
 }
 
