@@ -31,10 +31,69 @@ class BankAccount {
     }
 }
 
+class User {
+    constructor(name, email) {
+        // attributes
+        this.name = name;
+        this.email = email;
+        this.accounts = [];
+    }
+
+    addAccount(intRate, balance = 0) {
+        const newAccount = new BankAccount(intRate, balance);
+        this.accounts.push(newAccount); // Add the new account to the array
+        return this;
+    }
+
+    getAccount(index) {
+        return this.accounts[index]; // Return the bank account at the specified index
+    }
+
+
+    makeDeposit(amount, accountIndex = 0) {
+        const account = this.getAccount(accountIndex);
+        account.deposit(amount);
+        return this;
+    }
+
+    makeWithdraw(amount, accountIndex = 0) {
+        const account = this.getAccount(accountIndex);
+        account.withdraw(amount);
+        return this;
+    }
+
+    displayUserBalance(accountIndex = 0) {
+        const account = this.getAccount(accountIndex);
+        account.displayAccountInfo();
+        return this;
+    }
+
+    transferMoney(otherUser, amount, accountIndex = 0) {
+        const account = this.getAccount(accountIndex);
+        account.withdraw(amount);
+        otherUser.makeDeposit(amount);
+        return this;
+    }
+}
+
+const Michael = new User("Michael", "mj@yahoo.com");
+
+const Jay = new User("Jay", "jay@yahoo.com")
+
+const Huey = new User("Huey", "hj@yahoo.com")
+
 const accountOne = new BankAccount(.05)
 
 const accountTwo = new BankAccount(.01)
 
-console.log(accountOne.deposit(100).deposit(150).deposit(50).yieldInterest().displayAccountInfo());
+Michael.addAccount(0.02, 1000);
+Michael.addAccount(0.05, 500);
 
-console.log(accountTwo.deposit(4000).deposit(1800).withdraw(1200).withdraw(1400).yieldInterest().displayAccountInfo());
+// Deposit $100 into the second account
+Michael.makeDeposit(100, 1);
+
+// Withdraw $50 from the first account
+Michael.makeWithdraw(50);
+
+// Display the balance of the second account
+Michael.displayUserBalance(1);
